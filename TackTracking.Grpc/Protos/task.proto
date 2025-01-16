@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option csharp_namespace = "TackTracking.Grpc.Task";
+
+package task;
+
+service Task{
+	rpc Create (CreateTaskRequest) returns (TaskResponce);
+	rpc GetRange (Range) returns (TaskArrayResponce);
+	rpc GetByCreator (GetByCreatorRequest) returns (TaskArrayResponce);
+	rpc GetByMamber (GetByMamberRequest) returns (TaskUserArrayResponce);
+	rpc JoinUserToTask (JoinUserToTaskRequest) returns (TaskUserResponce);
+	rpc Edit (EditTaskRequest) returns (TaskResponce);
+}
+
+message Range{
+	int32 offset = 1;
+	int32 count = 2;
+}
+
+enum TaskStatus{
+	wait = 0;
+    active = 1;
+    progress = 2;
+    completed = 3;
+    closed = 4;
+}
+
+enum TaskUserRole{
+	projectManager = 0;
+    executer = 1;
+    teste = 2;
+}
+
+message CreateTaskRequest{
+	string user_id = 1;
+	string name = 2;
+	string description = 3;
+	int32 weight = 4;
+}
+
+message EditTaskRequest{
+	string task_id = 1;
+	string name = 2;
+	string description = 3;
+	int32 weight = 4;
+	TaskStatus status = 5;
+}
+
+message GetByCreatorRequest{
+	string user_id = 1;
+	Range range = 2;
+}
+
+message GetByMamberRequest{
+	string user_id = 1;
+	Range range = 2;
+}
+
+message JoinUserToTaskRequest{
+	string user_id = 1;
+	string task_id = 2;
+	TaskUserRole role = 3;
+}
+
+message TaskResponce{
+	string id = 1;
+	string creator_id = 2;
+	int32 weight = 4;
+	string name = 5;
+	string description = 6;
+	TaskStatus status = 7;
+	string date_create = 8;
+	string date_update = 9;
+}
+
+message TaskUserResponce{
+	string id = 1;
+	string task_id = 2;
+	TaskResponce task = 3;
+	TaskUserRole role = 4;
+}
+
+message TaskArrayResponce{
+	repeated TaskResponce Tasks = 1;
+}
+
+message TaskUserArrayResponce{
+	repeated TaskUserResponce Tasks = 1;
+}

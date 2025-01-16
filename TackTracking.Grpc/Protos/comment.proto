@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option csharp_namespace = "TackTracking.Grpc.Comment";
+
+package comment;
+
+service TaskComment{
+	rpc GetRangeByTask (GetTaskCommentRangeByTaskRequest) returns (TaskCommentArrayResponce);
+	rpc Create (CreateTaskCommentRequest) returns (TaskCommentResponce);
+}
+
+message Range{
+	int32 offset = 1;
+	int32 count = 2;
+}
+
+message GetTaskCommentRangeByTaskRequest{
+	string task_id = 1;
+	Range range = 2;
+}
+
+message CreateTaskCommentRequest{
+	string user_id = 1;
+	string task_id = 2;
+	string comment = 3;
+}
+
+
+message TaskCommentResponce{
+	string id = 1;
+	string user_id = 2;
+	string task_id = 3;
+	string comment = 4;
+	string date_create = 5;
+	string date_update = 6;
+}
+
+message TaskCommentArrayResponce{
+	repeated TaskCommentResponce comments = 1;
+}

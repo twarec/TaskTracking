@@ -1,0 +1,6 @@
+@TackTracking.Api_HostAddress = http://localhost:5229
+
+GET {{TackTracking.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

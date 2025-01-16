@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "TackTracking.Grpc.User";
+
+package user;
+
+service User{
+	rpc Create (CreateUserRequest) returns (UserResponce);
+	rpc GetByEmail (GetUserByEmailRequest) returns (UserResponce);
+	rpc GetRange (Range) returns (UserArrayResponce);
+}
+
+message Range{
+	int32 offset = 1;
+	int32 count = 2;
+}
+
+message CreateUserRequest{
+	string name = 1;
+	string email = 2;
+}
+
+message GetUserByEmailRequest{
+	string email = 1;
+}
+
+message UserResponce{
+	string id = 1;
+	string name = 2;
+	string email = 3;
+	string date_create = 4;
+}
+
+message UserArrayResponce{
+	repeated UserResponce users = 1;
+}
